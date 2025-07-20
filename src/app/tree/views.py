@@ -37,6 +37,6 @@ async def restore_tree(node_id: int, db: AsyncSession = Depends(get_db)):
 
 @router.get('/dev', response_model=StandardResponse[dict])
 @autowrap
-async def get_tree(node_id: int, db: AsyncSession = Depends(get_db)):
+async def get_tree_dev(node_id: int, db: AsyncSession = Depends(get_db)):
     service = TreeService(db)
     return await service.get_tree_on_db(int(node_id), 1)
