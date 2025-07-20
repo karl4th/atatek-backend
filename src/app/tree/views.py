@@ -17,6 +17,12 @@ async def get_tree(node_id: int, user_data = Depends(auth.get_user_data_dependen
     service = TreeService(db)
     return await service.get_tree_on_db(int(node_id), int(user_data["sub"]))
 
+@router.get('/dev', response_model=StandardResponse[dict])
+@autowrap
+async def get_tree_dev(node_id: int, db: AsyncSession = Depends(get_db)):
+    service = TreeService(db)
+    return await service.get_tree_on_db(int(node_id), 1)
+
 @router.get('/{node_id}', response_model=StandardResponse[dict])
 @autowrap
 async def get_node_data(node_id: int, db: AsyncSession = Depends(get_db)):
@@ -34,9 +40,3 @@ async def delete_tree(node_id: int, db: AsyncSession = Depends(get_db)):
 async def restore_tree(node_id: int, db: AsyncSession = Depends(get_db)):
     service = TreeService(db)
     return await service.restore_tree_on_page(int(node_id))
-
-@router.get('/dev', response_model=StandardResponse[dict])
-@autowrap
-async def get_tree_dev(node_id: int, db: AsyncSession = Depends(get_db)):
-    service = TreeService(db)
-    return await service.get_tree_on_db(int(node_id), 1)
