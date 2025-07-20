@@ -1,0 +1,13 @@
+alembic
+asyncpg
+fastapi
+uvicorn
+python-dotenv
+pydantic
+pydantic-settings
+sqlalchemy
+assem
+python-multipart
+requests
+argon2-cffi
+httpx
