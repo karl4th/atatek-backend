@@ -1,3 +1,4 @@
+from datetime import datetime
 from pydantic import BaseModel, Field
 from typing import Optional
 from enum import Enum
@@ -17,8 +18,8 @@ class PersonData(BaseModel):
     first_name: str = Field(..., description="Имя")
     last_name: str = Field(..., description="Фамилия")
     gender: str = Field(..., description="Пол")
-    birthday: str = Field(..., description="Дата рождения")
-    death_date: Optional[str] = Field(None, description="Дата смерти")
+    birthday: datetime = Field(..., description="Дата рождения")
+    death_date: Optional[datetime] = Field(None, description="Дата смерти")
     avatar: Optional[str] = Field(None, description="Аватар")
 
     class Config:

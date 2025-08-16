@@ -27,8 +27,8 @@ class Aulet(Base):
    
     gender: Mapped[Gender] = mapped_column(nullable=False)
 
-    birthday: Mapped[str] = mapped_column(nullable=False)
-    death_date: Mapped[str] = mapped_column(nullable=True)
+    birthday: Mapped[datetime] = mapped_column(nullable=False)
+    death_date: Mapped[datetime] = mapped_column(nullable=True)
 
     avatar: Mapped[str] = mapped_column(String, nullable=True)
 

@@ -26,7 +26,7 @@ class AuletService:
                 return date_obj.strftime('%d.%m.%Y')
             except ValueError:
                 # Если дата не в правильном формате, возвращаем None или исходную строку
-                return None
+                return date_str
         return None
 
     async def get_aulet_tree(self, user_id: int) -> List[dict]:
@@ -37,7 +37,7 @@ class AuletService:
         result = await self.db.execute(
             select(Aulet).where(
                 and_(Aulet.user_id == user_id, Aulet.is_deleted == False)
-            )
+            ).order_by(Aulet.birthday)
         )
         persons = result.scalars().all()
         
@@ -102,7 +102,7 @@ class AuletService:
                 'data': {
                     'first name': person.first_name,
                     'last name': person.last_name,
-                    'birthday': self._format_date(person.birthday),
+                    'birthday': person.birthday.isoformat(),
                     'avatar': person.avatar if person.avatar else 'def-ava.png',
                     'gender': self._get_gender_value(person.gender)
                 }
@@ -110,7 +110,7 @@ class AuletService:
             
             # Добавляем дату смерти если есть
             if person.death_date:
-                person_data['data']['death_date'] = self._format_date(person.death_date)
+                person_data['data']['death_date'] = person.death_date.isoformat()
                 
             result_data.append(person_data)
         
@@ -214,7 +214,7 @@ class AuletService:
             person_id = new_person.id
             first_name = new_person.first_name
             last_name = new_person.last_name
-            birthday = new_person.birthday
+            birthday = new_person.birthday.isoformat() if new_person.birthday else None
             avatar = new_person.avatar
             gender_value = self._get_gender_value(new_person.gender)
             
