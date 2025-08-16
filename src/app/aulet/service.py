@@ -349,7 +349,7 @@ class AuletService:
                 'data': {
                     'first name': first_name,
                     'last name': last_name,
-                    'birthday': birthday,
+                    'birthday': birthday.isoformat(),
                     'avatar': avatar if avatar else 'def-ava.png',
                     'gender': gender_value
                 }
