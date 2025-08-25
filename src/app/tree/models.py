@@ -11,7 +11,7 @@ class Tree(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
 
-    name: Mapped[str] = mapped_column(unique=True, nullable=False)
+    name: Mapped[str] = mapped_column(nullable=False)
     birth: Mapped[str] = mapped_column(nullable=True)
     death: Mapped[str] = mapped_column(nullable=True)
     bio: Mapped[str] = mapped_column(Text, nullable=True)

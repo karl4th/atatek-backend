@@ -184,4 +184,4 @@ class TreeService:
 
         if len(parents) <= 4:
             return parents
-        return parents[:2] + parents[-2:]
+        return parents[:2] + parents[-1:]
