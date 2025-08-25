@@ -118,12 +118,13 @@ class TreeService:
         for res in data:
             if res.is_deleted:
                 continue
-            
+            data = await self.get_parents(res.id)
             response.append({
                     "id": res.id,
                     "name": res.name,
                     "birth": res.birth if res.birth else None,
                     "death": res.death if res.death else None,
+                    "parents": data
                 })  
         return response
 
