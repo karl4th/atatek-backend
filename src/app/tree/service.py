@@ -191,7 +191,4 @@ class TreeService:
         if parent_id and not any(p["id"] == parent_id for p in parents):
             return False
 
-        if len(parents) <= 3:
-            return parents
-
-        return parents[:1] + parents[-2:]
+        return parents[::-1]
