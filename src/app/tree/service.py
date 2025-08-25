@@ -154,3 +154,30 @@ class TreeService:
             "bio": node.bio,
             "created_by": userD
         }
+
+
+    async def get_parents(self, tree_id: int):
+        parents = []
+        current_id = tree_id
+
+        while current_id is not None:
+            stmt = select(Tree).where(Tree.id == current_id)
+            result = await self.db.execute(stmt)
+            node = result.scalar_one_or_none()
+
+            if not node or node.parent_id is None:
+                break
+
+            stmt = select(Tree).where(Tree.id == node.parent_id)
+            result = await self.db.execute(stmt)
+            parent = result.scalar_one_or_none()
+
+            if parent:
+                parents.append(parent)
+                current_id = parent.id
+            else:
+                break
+
+        if len(parents) <= 4:
+            return parents
+        return parents[:2] + parents[-2:]
