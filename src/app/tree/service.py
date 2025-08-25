@@ -120,10 +120,10 @@ class TreeService:
                 continue
             
             response.append({
-                    "id": child.id,
-                    "name": child.name,
-                    "birth": child.birth if child.birth else None,
-                    "death": child.death if child.death else None,
+                    "id": res.id,
+                    "name": res.name,
+                    "birth": res.birth if res.birth else None,
+                    "death": res.death if res.death else None,
                 })  
         return response
 
