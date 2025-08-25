@@ -25,6 +25,6 @@ class TreeResponse(BaseTree):
     updated_by: Optional[int] = Field(None, description="ID обновляющего", example=1)
 
 
-class SearchTree(BaseTree):
+class SearchTree(BaseModel):
     name: str
     parent_id: int
