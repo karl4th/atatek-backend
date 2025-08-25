@@ -174,7 +174,10 @@ class TreeService:
             parent = result.scalar_one_or_none()
 
             if parent:
-                parents.append(parent)
+                parents.append({
+                    "id": parent.id,
+                    "name": parent.name,
+                })
                 current_id = parent.id
             else:
                 break
