@@ -119,13 +119,16 @@ class TreeService:
             if res.is_deleted:
                 continue
             data = await self.get_parents(res.id)
+            if data == False:
+                continue
+
             response.append({
-                    "id": res.id,
-                    "name": res.name,
-                    "birth": res.birth if res.birth else None,
-                    "death": res.death if res.death else None,
-                    "parents": data
-                })  
+                "id": res.id,
+                "name": res.name,
+                "birth": res.birth if res.birth else None,
+                "death": res.death if res.death else None,
+                "parents": data
+            })  
         return response
 
     async def get_tree_data(self, node_id: int):
@@ -156,8 +159,7 @@ class TreeService:
             "created_by": userD
         }
 
-
-    async def get_parents(self, tree_id: int):
+    async def get_parents(self, tree_id: int, parent_id: int = None):
         parents = []
         current_id = tree_id
 
@@ -182,6 +184,14 @@ class TreeService:
             else:
                 break
 
-        if len(parents) <= 4:
+        if not parents:
+            return False
+
+        # проверяем наличие конкретного предка
+        if parent_id and not any(p["id"] == parent_id for p in parents):
+            return False
+
+        if len(parents) <= 3:
             return parents
+
         return parents[:1] + parents[-2:]
