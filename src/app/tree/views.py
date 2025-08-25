@@ -40,3 +40,9 @@ async def delete_tree(node_id: int, db: AsyncSession = Depends(get_db)):
 async def restore_tree(node_id: int, db: AsyncSession = Depends(get_db)):
     service = TreeService(db)
     return await service.restore_tree_on_page(int(node_id))
+
+@router.post('/search', response_model=StandardResponse[dict])
+@autowrap
+async def search_data_by_name(name: str, db: AsyncSession = Depends(get_db)):
+    service = TreeService(db)
+    return await service.search_data_by_name(name)

@@ -110,6 +110,22 @@ class TreeService:
         await self.db.refresh(node)
         return True
 
+    async def search_data_by_name(self, name: str):
+        stmt = select(Tree).where(Tree.name.ilike(f"%{name}%"))
+        result = await self.db.execute(stmt)
+        response = []
+        data = result.scalars().all()
+        for res in data:
+            if res.is_deleted:
+                continue
+            
+            response.append({
+                    "id": child.id,
+                    "name": child.name,
+                    "birth": child.birth if child.birth else None,
+                    "death": child.death if child.death else None,
+                })  
+        return response
 
     async def get_tree_data(self, node_id: int):
         result = await self.db.execute(select(Tree).where(Tree.id == node_id))
