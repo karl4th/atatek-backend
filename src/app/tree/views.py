@@ -7,6 +7,7 @@ from src.app.db.core import get_db
 from src.app.config.auth import auth
 from src.app.config.response import StandardResponse, autowrap
 from .service import TreeService
+from .schemas import SearchTree 
 
 
 router = APIRouter(prefix="/api/tree", tags=["tree"])
@@ -41,8 +42,8 @@ async def restore_tree(node_id: int, db: AsyncSession = Depends(get_db)):
     service = TreeService(db)
     return await service.restore_tree_on_page(int(node_id))
 
-@router.post('/search', response_model=StandardResponse[dict])
+@router.post('/search', response_model=StandardResponse[SearchTree])
 @autowrap
-async def search_data_by_name(name: str, parent_id: int, db: AsyncSession = Depends(get_db)):
+async def search_data_by_name(search: SearchTree, db: AsyncSession = Depends(get_db)):
     service = TreeService(db)
-    return await service.search_data_by_name(name, int(parent_id))
+    return await service.search_data_by_name(search.name, int(search.parent_id))

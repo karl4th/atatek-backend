@@ -24,3 +24,7 @@ class TreeResponse(BaseTree):
     created_by: Optional[int] = Field(None, description="ID создателя", example=1)
     updated_by: Optional[int] = Field(None, description="ID обновляющего", example=1)
 
+
+class SearchTree(BaseTree):
+    name: str
+    parent_id: int
