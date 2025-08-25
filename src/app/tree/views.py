@@ -43,6 +43,6 @@ async def restore_tree(node_id: int, db: AsyncSession = Depends(get_db)):
 
 @router.post('/search', response_model=StandardResponse[dict])
 @autowrap
-async def search_data_by_name(name: str, db: AsyncSession = Depends(get_db)):
+async def search_data_by_name(name: str, parent_id: int = None, db: AsyncSession = Depends(get_db)):
     service = TreeService(db)
-    return await service.search_data_by_name(name)
+    return await service.search_data_by_name(name, parent_id)
