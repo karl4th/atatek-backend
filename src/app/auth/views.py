@@ -103,5 +103,6 @@ async def test():
         "p": settings.DB_PORT,
         "n": settings.DB_NAME,
         "u": settings.DB_USER,
-        "p": settings.DB_PASSWORD
+        "p": settings.DB_PASSWORD,
+        's': settings.JWT_SECRET_KEY
     }
