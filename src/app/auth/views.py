@@ -9,6 +9,7 @@ from src.app.db.core import get_db
 from src.app.auth.schemas import *
 from src.app.auth.service import UsersService
 from src.app.config.auth import auth
+from src.app.config.base import settings
 
 router = APIRouter()
 
@@ -94,3 +95,13 @@ async def my_page(user_data = Depends(auth.get_user_data_dependency()), db: Asyn
     service = UsersService(db)
     user = await service.get_my_page(int(user_data["sub"]))
     return user
+
+@router.post('/test')
+async def test():
+    return {
+        "h": settings.DB_HOST,
+        "p": settings.DB_PORT,
+        "n": settings.DB_NAME,
+        "u": settings.DB_USER,
+        "p": settings.DB_PASSWORD
+    }
