@@ -5,11 +5,11 @@ import os
 class Settings(BaseSettings):
     DB_HOST: str = os.getenv('DB_HOST', 'localhost')
     DB_PORT: int = int(os.getenv('DB_PORT', '5432')) if os.getenv('DB_PORT', '5432').isdigit() else 5432
-    DB_USER: str = os.getenv('DB_USER', 'coosby_user')
-    DB_PASSWORD: str = os.getenv('DB_PASSWORD', 'coosby_password')
-    DB_NAME: str = os.getenv('DB_NAME', 'atatek')
+    DB_USER: str = os.getenv('DB_USER', 'dadada')
+    DB_PASSWORD: str = os.getenv('DB_PASSWORD', 'dadada')
+    DB_NAME: str = os.getenv('DB_NAME', 'dadada')
 
-    JWT_SECRET_KEY: str = os.getenv('JWT_SECRET_KEY', 'secret')
+    JWT_SECRET_KEY: str = os.getenv('JWT_SECRET_KEY', 'dadada')
 
     @property
     def get_base_link(self):
