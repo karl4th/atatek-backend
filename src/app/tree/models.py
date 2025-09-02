@@ -26,5 +26,5 @@ class Tree(Base):
     updated_at: Mapped[datetime] = mapped_column(nullable=True, server_default=func.now(), server_onupdate=func.now())
 
     is_deleted: Mapped[bool] = mapped_column(nullable=True, default=False)
-    t_id: Mapped[int] = mapped_column(nullable=False)
+    t_id: Mapped[int] = mapped_column(nullable=True)
     parent_id: Mapped[int] = mapped_column(Integer, nullable=True)
