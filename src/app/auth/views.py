@@ -27,6 +27,15 @@ async def login(user_data: LoginUser, response: Response, db: AsyncSession = Dep
     auth.set_tokens_in_cookies(response, access_token, refresh_token, csrf_token)
     return new_user
 
+
+@router.post("/logout")
+async def logout(response: Response):
+    access_token = ''
+    refresh_token = ''
+    csrf_token = ''
+    auth.set_tokens_in_cookies(response, access_token, refresh_token, csrf_token)
+    return {"message": "Logged out successfully"}
+
 @router.post("/signup", response_model=StandardResponse[UserResponse])
 @autowrap
 async def signup(user_data: CreateUser, db: AsyncSession = Depends(get_db)):
