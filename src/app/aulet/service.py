@@ -37,7 +37,7 @@ class AuletService:
         result = await self.db.execute(
             select(Aulet).where(
                 and_(Aulet.user_id == user_id, Aulet.is_deleted == False)
-            ).order_by(Aulet.birthday)
+            ).order_by(Aulet.id)
         )
         persons = result.scalars().all()
         
