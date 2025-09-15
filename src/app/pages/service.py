@@ -113,7 +113,7 @@ class PageService:
             
             existing_moderator = await self.db.execute(
                 select(PageModerator).where(
-                    PageModerator.page_id == page_id, 
+                    PageModerator.page_id == result.id, 
                     PageModerator.user_id == moderator_id
                 )
             )
@@ -121,7 +121,7 @@ class PageService:
                 raise HTTPException(status_code=400, detail="Этот пользователь уже является модератором")
             
             new_moderator = PageModerator(
-                page_id=page_id,
+                page_id=result.id,
                 user_id=moderator_id,
             )
             self.db.add(new_moderator)
@@ -194,7 +194,7 @@ class PageService:
             if not result:
                 raise HTTPException(status_code=404, detail="Страница не найдена")
             
-            moderator = await self.db.execute(select(PageModerator).where(PageModerator.page_id == page_id, PageModerator.user_id == moderator_id))
+            moderator = await self.db.execute(select(PageModerator).where(PageModerator.page_id == result.id, PageModerator.user_id == moderator_id))
             moderator = moderator.scalars().first()
             if not moderator:
                 raise HTTPException(status_code=404, detail="Модератор не найден")
