@@ -60,7 +60,7 @@ class PageService:
 
     async def get_page_by_id(self, page_id: int) -> PageResponse:
         try:
-            page = await self.db.execute(select(Page).where(Page.id == page_id))
+            page = await self.db.execute(select(Page).where(Page.tree_id == page_id))
             result = page.scalars().first()
             if not result:
                 raise HTTPException(status_code=404, detail="Страница не найдена")
@@ -69,7 +69,7 @@ class PageService:
                 select(User)
                 .select_from(User)
                 .join(PageModerator, User.id == PageModerator.user_id)
-                .where(PageModerator.page_id == page_id)
+                .where(PageModerator.page_id == page.id)
             )
             moderators_list = [
                 BaseUser(
@@ -106,7 +106,7 @@ class PageService:
             if user_role != 3:
                 raise HTTPException(status_code=403, detail="У вас нет прав на создание страниц")
             
-            page = await self.db.execute(select(Page).where(Page.id == page_id))
+            page = await self.db.execute(select(Page).where(Page.tree_id == page_id))
             result = page.scalars().first()
             if not result:
                 raise HTTPException(status_code=404, detail="Страница не найдена")
@@ -189,7 +189,7 @@ class PageService:
             if user_role != 3:
                 raise HTTPException(status_code=403, detail="У вас нет прав на удаление модераторов")
             
-            page = await self.db.execute(select(Page).where(Page.id == page_id))
+            page = await self.db.execute(select(Page).where(Page.tree_id == page_id))
             result = page.scalars().first()
             if not result:
                 raise HTTPException(status_code=404, detail="Страница не найдена")
