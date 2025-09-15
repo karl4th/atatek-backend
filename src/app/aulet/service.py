@@ -277,49 +277,7 @@ class AuletService:
             person.birthday = person_update.data.birthday
             person.death_date = person_update.data.death_date
             person.avatar = person_update.data.avatar if person_update.data.avatar else None
-            
-            # Удаляем старые связи
-            old_relations = await self.db.execute(
-                select(AuletRelation).where(AuletRelation.node_id == person.id)
-            )
-            for old_relation in old_relations.scalars().all():
-                await self.db.delete(old_relation)
-            
-            # Создаем новые связи (аналогично create_aulet_person)
-            relations_to_add = []
-            
-            if person_update.rels.spouses:
-                for spouse_id in person_update.rels.spouses:
-                    relations_to_add.append(AuletRelation(
-                        type=Relation.spouses,
-                        node_id=person.id,
-                        related_node_id=spouse_id
-                    ))
-            
-            if person_update.rels.children:
-                for child_id in person_update.rels.children:
-                    relations_to_add.append(AuletRelation(
-                        type=Relation.children,
-                        node_id=person.id,
-                        related_node_id=child_id
-                    ))
-            
-            if person_update.rels.father:
-                relations_to_add.append(AuletRelation(
-                    type=Relation.father,
-                    node_id=person.id,
-                    related_node_id=person_update.rels.father
-                ))
-            
-            if person_update.rels.mother:
-                relations_to_add.append(AuletRelation(
-                    type=Relation.mother,
-                    node_id=person.id,
-                    related_node_id=person_update.rels.mother
-                ))
-            
-            if relations_to_add:
-                self.db.add_all(relations_to_add)
+                        
             
             # Сохраняем данные до commit'а для избежания проблем с lazy loading
             person_id = person.id
