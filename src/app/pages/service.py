@@ -69,7 +69,7 @@ class PageService:
                 select(User)
                 .select_from(User)
                 .join(PageModerator, User.id == PageModerator.user_id)
-                .where(PageModerator.page_id == page.id)
+                .where(PageModerator.page_id == result.id)
             )
             moderators_list = [
                 BaseUser(
