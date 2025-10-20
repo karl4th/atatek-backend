@@ -12,7 +12,7 @@ app = FastAPI(
 )
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Разрешаем фронтенду на Next.js делать запросы
+    allow_origins=["http://localhost:3000", "https://alash.atatek.kz"],  # Разрешаем фронтенду на Next.js делать запросы
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
